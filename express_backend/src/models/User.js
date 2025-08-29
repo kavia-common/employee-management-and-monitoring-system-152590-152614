@@ -4,8 +4,7 @@ const bcrypt = require('bcrypt');
 
 /**
  * User model.
- * Note: This is a minimal scaffold to enable future auth implementation.
- * Fields and associations can be extended as the project grows.
+ * Fields support authentication via email/password with bcrypt hashing.
  */
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -26,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
         field: 'password_hash',
+        comment: 'BCrypt hash of the user password',
       },
       name: {
         type: DataTypes.STRING(120),
@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       indexes: [{ unique: true, fields: ['email'] }],
       hooks: {
         beforeSave: async (user) => {
-          // If a virtual plainPassword property is set, hash and assign
+          // Hash if changed and not already a bcrypt hash
           if (user.changed('passwordHash') && user.passwordHash && user.passwordHash.length < 60) {
             const saltRounds = 10;
             user.passwordHash = await bcrypt.hash(user.passwordHash, saltRounds);

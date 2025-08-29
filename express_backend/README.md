@@ -6,7 +6,7 @@ Core backend for Employee Monitoring & Management System.
 
 1. Copy environment file:
    cp .env.example .env
-   Then update values for your environment, ensuring the MySQL DB is reachable on port 5000.
+   Then update values for your environment (DB, JWT_SECRET, etc.).
 
 2. Install dependencies:
    npm install
@@ -24,3 +24,13 @@ Core backend for Employee Monitoring & Management System.
 - Required envs: DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME
 
 The server will attempt a DB connection on startup and log success/failure.
+
+## Authentication
+
+- Passwords are hashed with bcrypt.
+- JWT tokens are issued on registration and login.
+- Routes:
+  - POST /auth/register
+  - POST /auth/login
+  - GET /auth/me (requires Bearer token)
+- Set JWT_SECRET and JWT_EXPIRES_IN in your .env.

@@ -8,6 +8,7 @@ const projectsRoutes = require('./projects');
 const tasksRoutes = require('./tasks');
 const leavesRoutes = require('./leaves');
 const notificationsRoutes = require('./notifications');
+const analyticsRoutes = require('./analytics');
 
 const router = express.Router();
 // Health endpoint
@@ -63,5 +64,8 @@ router.use('/leaves', leavesRoutes);
 
 // Mount notifications routes
 router.use('/notifications', notificationsRoutes);
+
+// Mount analytics routes
+router.use('/analytics', analyticsRoutes);
 
 module.exports = router;

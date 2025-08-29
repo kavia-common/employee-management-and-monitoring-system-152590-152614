@@ -6,6 +6,7 @@ const attendanceRoutes = require('./attendance');
 const meetingsRoutes = require('./meetings');
 const projectsRoutes = require('./projects');
 const tasksRoutes = require('./tasks');
+const leavesRoutes = require('./leaves');
 
 const router = express.Router();
 // Health endpoint
@@ -55,5 +56,8 @@ router.use('/projects', projectsRoutes);
 
 // Mount tasks routes
 router.use('/tasks', tasksRoutes);
+
+// Mount leaves routes
+router.use('/leaves', leavesRoutes);
 
 module.exports = router;

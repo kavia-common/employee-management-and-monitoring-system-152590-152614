@@ -2,7 +2,7 @@
 
 const express = require('express');
 const authController = require('../controllers/auth');
-const { authenticate } = require('../middleware/auth');
+const { authenticateWithRoles } = require('../middleware');
 
 const router = express.Router();
 
@@ -88,6 +88,6 @@ router.post('/login', authController.login.bind(authController));
  *       401:
  *         description: Unauthorized
  */
-router.get('/me', authenticate, authController.me.bind(authController));
+router.get('/me', authenticateWithRoles(), authController.me.bind(authController));
 
 module.exports = router;

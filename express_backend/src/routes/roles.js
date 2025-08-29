@@ -2,7 +2,7 @@
 
 const express = require('express');
 const rolesController = require('../controllers/roles');
-const { authenticate, authorize } = require('../middleware/auth');
+const { authenticateWithRoles, requireRoles } = require('../middleware');
 
 const router = express.Router();
 
@@ -27,7 +27,7 @@ const router = express.Router();
  *       401:
  *         description: Unauthorized
  */
-router.get('/', authenticate, rolesController.list.bind(rolesController));
+router.get('/', authenticateWithRoles(), rolesController.list.bind(rolesController));
 
 /**
  * @swagger
@@ -63,8 +63,8 @@ router.get('/', authenticate, rolesController.list.bind(rolesController));
  */
 router.post(
   '/assign',
-  authenticate,
-  authorize(['superadmin', 'manager']),
+  authenticateWithRoles(),
+  requireRoles(['superadmin', 'manager']),
   rolesController.assign.bind(rolesController)
 );
 
@@ -102,8 +102,8 @@ router.post(
  */
 router.post(
   '/remove',
-  authenticate,
-  authorize(['superadmin', 'manager']),
+  authenticateWithRoles(),
+  requireRoles(['superadmin', 'manager']),
   rolesController.remove.bind(rolesController)
 );
 

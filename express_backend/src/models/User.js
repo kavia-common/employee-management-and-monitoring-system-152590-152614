@@ -68,7 +68,13 @@ module.exports = (sequelize, DataTypes) => {
 
   // Placeholder for associations
   User.associate = (models) => {
-    // Define associations like: User.hasMany(models.Task)
+    // Many-to-Many: Users <-> Roles via UserRole
+    User.belongsToMany(models.Role, {
+      through: models.UserRole,
+      foreignKey: 'user_id',
+      otherKey: 'role_id',
+      as: 'roles',
+    });
   };
 
   return User;

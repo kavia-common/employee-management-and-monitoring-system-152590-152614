@@ -2,7 +2,7 @@
 
 const app = require('./app');
 const { getConfig } = require('./config');
-const { testConnection } = require('./db/sequelize');
+const { testConnection, syncDatabase } = require('./db/sequelize');
 
 const { port: PORT, host: HOST } = getConfig().server;
 
@@ -12,6 +12,10 @@ const { port: PORT, host: HOST } = getConfig().server;
     await testConnection();
     // eslint-disable-next-line no-console
     console.log('Database connection established successfully.');
+    // Sync models (safe default: no force/alter)
+    await syncDatabase({ alter: false, force: false });
+    // eslint-disable-next-line no-console
+    console.log('Database schemas synchronized.');
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('Unable to connect to the database:', err && err.message ? err.message : err);
